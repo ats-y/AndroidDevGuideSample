@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,6 +20,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.atsy.devguidesample.databinding.ActivityMainBinding;
+import com.atsy.devguidesample.models.Const;
+import com.atsy.devguidesample.views.NoPermitFragment;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -38,6 +41,24 @@ public class MainActivity extends AppCompatActivity {
         View view = mViewBinding.getRoot();
         setContentView(view);
 
+        // 許可されていない権限があれば、権限リクエストする。
+        List<String> noPermissions = getNoPermitted();
+        if( noPermissions.size() > 0){
+            ActivityCompat.requestPermissions(this, noPermissions.toArray(
+                    new String[noPermissions.size()]),0);
+            return;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d(Const.LOG_TAG, "onStart()");
+
+    }
+
+    private List<String> getNoPermitted() {
         // 必要な権限が許可されているかチェックする。
         String[] needPermissions = new String[] {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -51,12 +72,33 @@ public class MainActivity extends AppCompatActivity {
                 noPermissions.add(p);
             }
         }
+        return noPermissions;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d(Const.LOG_TAG, "onResume()");
 
         // 許可されていない権限があれば、権限リクエストする。
-        if( noPermissions.size() > 0){
-            ActivityCompat.requestPermissions(this, noPermissions.toArray(
-                    new String[noPermissions.size()]),0);
-            return;
+        List<String> noPermissions = getNoPermitted();
+
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment noPermitFragment = fm.findFragmentByTag("NO");
+        if( noPermissions.size() > 0 ) {
+            if (noPermitFragment == null) {
+
+                fm.beginTransaction()
+                        .add(R.id.container, new NoPermitFragment(), "NO")
+                        .commit();
+            }
+        } else {
+            if (noPermitFragment != null) {
+                fm.beginTransaction()
+                        .remove(noPermitFragment)
+                        .commit();
+            }
         }
     }
 
@@ -73,20 +115,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if(isPermitted) {
+        if(isPermitted ){
             mViewBinding.Label.setText("OK");
         } else {
 
+
             mViewBinding.Label.setText("NG");
-
-            // アプリの設定画面を開く。
-            Context context = getApplicationContext();
-            Intent intent = new Intent();
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.fromParts("package", context.getPackageName(), null));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -1,4 +1,4 @@
-package com.atsy.devguidesample;
+package com.atsy.devguidesample.views;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,19 +9,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.atsy.devguidesample.R;
 import com.atsy.devguidesample.databinding.ActivityMainBinding;
 import com.atsy.devguidesample.models.Const;
-import com.atsy.devguidesample.views.NoPermitFragment;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -41,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         View view = mViewBinding.getRoot();
         setContentView(view);
 
+        final Logger logger = LoggerFactory.getLogger( MainActivity.class );
+
         // 許可されていない権限があれば、権限リクエストする。
         List<String> noPermissions = getNoPermitted();
         if( noPermissions.size() > 0){
@@ -48,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
                     new String[noPermissions.size()]),0);
             return;
         }
+
+        mViewBinding.btnLogging.setOnClickListener( view1 -> {
+
+            logger.debug("bbb");
+        });
     }
 
     @Override

@@ -26,6 +26,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 public class MainActivity extends AppCompatActivity {
 
     /** ビューバインディング */
@@ -53,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
         mViewBinding.btnLogging.setOnClickListener( view1 -> {
 
             logger.debug("bbb");
+        });
+
+        // ListTrialActivityへの遷移。
+        mViewBinding.btnNavigateListTrial.setOnClickListener(view1 -> {
+
+            Timber.i("ListTrialActivityへの遷移");
+           Intent intent = new Intent(this, ListTrialActivity.class);
+           startActivity(intent);
         });
     }
 

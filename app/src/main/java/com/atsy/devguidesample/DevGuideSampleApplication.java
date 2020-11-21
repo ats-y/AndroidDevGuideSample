@@ -15,7 +15,6 @@ public class DevGuideSampleApplication extends Application {
         // ログ出力の初期設定。
         // 出力処理の実体をLogbackにする。
         Timber.plant(new LogbackTree());
-        Timber.tag("DevGuideSampleLog");
         Timber.i("App Start!");
     }
 }

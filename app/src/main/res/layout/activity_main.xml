@@ -37,6 +37,15 @@
         android:text="Logging"
         />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_navigate_list_trial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_logging"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="ListTrialActivityへ" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

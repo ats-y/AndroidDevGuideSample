@@ -20,23 +20,23 @@ public class LogbackTree extends Timber.Tree {
     @Override
     protected void log(int priority, @Nullable String tag, @NotNull String message, @Nullable Throwable t) {
 
-        Logger logger = LoggerFactory.getLogger(tag);
+        Logger logger = LoggerFactory.getLogger("DevGuideSampleLog");
         switch(priority){
             case Log.ASSERT:
             case Log.ERROR:
-                logger.error(message, t);
+                logger.error(message);
                 break;
             case Log.WARN:
-                logger.warn(message, t);
+                logger.warn(message);
                 break;
             case Log.DEBUG:
-                logger.debug(message, t);
+                logger.debug(message);
                 break;
             case Log.INFO:
-                logger.info(message, t);
+                logger.info(message);
                 break;
             case Log.VERBOSE:
-                logger.trace(message, t);
+                logger.trace(message);
                 break;
             default:
                 // 出力しない。

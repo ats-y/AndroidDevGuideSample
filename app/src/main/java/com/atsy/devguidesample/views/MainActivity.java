@@ -12,13 +12,16 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 import android.view.View;
 
 import com.atsy.devguidesample.DevGuideSampleApplication;
 import com.atsy.devguidesample.R;
 import com.atsy.devguidesample.databinding.ActivityMainBinding;
 import com.atsy.devguidesample.models.Const;
+import com.atsy.devguidesample.repositories.SettingsRepository;
 import com.atsy.devguidesample.repositories.WeatherRepository;
 
 import java.text.MessageFormat;
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     public WeatherRepository mWeatherRepository;
+
+    @Inject
+    public SettingsRepository mSettingsRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // 設定情報の読取
+        loadSettings();
+
         mViewBinding.btnLogging.setOnClickListener( view1 -> {
             Timber.d("ロギング！！");
         });
@@ -83,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         // 必要な権限が許可されているかチェックする。
         String[] needPermissions = new String[] {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.RECORD_AUDIO,
         };
         List<String> noPermissions = new ArrayList<>();
@@ -137,12 +147,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(isPermitted ){
+
+            if (loadSettings()) return;
             mViewBinding.Label.setText("OK");
         } else {
-
-
             mViewBinding.Label.setText("NG");
         }
+    }
+
+    /**
+     * 外部ストレージから設定情報を読み取る。
+     * @return 読取結果
+     */
+    private boolean loadSettings() {
+        StringBuilder pathBuilder = new StringBuilder();
+        pathBuilder.append(Environment.getExternalStorageDirectory());
+        pathBuilder.append("/DevGuideSample/AppSettings.json");
+        try {
+            mSettingsRepository.load(pathBuilder.toString());
+        } catch (Exception ex) {
+            Timber.d(ex, getString(R.string.msg_failed_read_setting));
+            mViewBinding.Label.setText(getString(R.string.msg_failed_read_setting));
+            return true;
+        }
+        return false;
     }
 
     @Override

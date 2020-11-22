@@ -27,8 +27,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import timber.log.Timber;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     /** ビューバインディング */
@@ -43,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         // フィールドインジェクションする。
         // このタイミングで@Injectフィールドにインジェクションされる。
-        ((DevGuideSampleApplication)getApplicationContext()).appComponent.inject(this);
+        // Hiltだとこれがなくてもインジェクションしてくれる。
+        // ((DevGuideSampleApplication)getApplicationContext()).appComponent.inject(this);
 
         // ビューバインディングの設定。
         mViewBinding = ActivityMainBinding.inflate(getLayoutInflater());

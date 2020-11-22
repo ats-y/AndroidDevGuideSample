@@ -25,3 +25,18 @@ DevGuideSampleApplication.onCreate()でTimberを初期化している。出力�
 
 logback-androidの出力設定は`app/src/main/assets/logback.xml`で定義する。設定項目は[logback-android wiki](https://github.com/tony19/logback-android/wiki)および[logbackマニュアル](http://logback.qos.ch/manual/index_ja.html)参照。
 
+<br>
+
+# DI 依存性注入
+
+## Daggerのみ
+---
+
+
+<br>
+
+## Hilt
+---
+
+
+<br>

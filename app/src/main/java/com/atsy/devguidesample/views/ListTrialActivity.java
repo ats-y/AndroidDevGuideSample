@@ -6,8 +6,10 @@ import android.os.Bundle;
 
 import com.atsy.devguidesample.R;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import timber.log.Timber;
 
+@AndroidEntryPoint
 public class ListTrialActivity extends AppCompatActivity {
 
     @Override

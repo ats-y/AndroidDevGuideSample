@@ -29,11 +29,11 @@ public class LogbackTree extends Timber.Tree {
             case Log.WARN:
                 logger.warn(message);
                 break;
-            case Log.DEBUG:
-                logger.debug(message);
-                break;
             case Log.INFO:
                 logger.info(message);
+                break;
+            case Log.DEBUG:
+                logger.debug(message);
                 break;
             case Log.VERBOSE:
                 logger.trace(message);

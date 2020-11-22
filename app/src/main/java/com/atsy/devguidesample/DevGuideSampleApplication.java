@@ -4,9 +4,15 @@ import android.app.Application;
 
 import com.atsy.devguidesample.services.LogbackTree;
 
+import dagger.hilt.android.HiltAndroidApp;
 import timber.log.Timber;
 
+@HiltAndroidApp
 public class DevGuideSampleApplication extends Application {
+
+    // DaggerIApplicationComponentは、IApplicationComponent作成直後にビルドすると自動生成される。
+    // Hiltを使う場合は不要。
+    //public IApplicationComponent appComponent = DaggerIApplicationComponent.create();
 
     @Override
     public void onCreate() {

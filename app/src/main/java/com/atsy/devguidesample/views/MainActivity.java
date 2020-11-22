@@ -15,34 +15,43 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.atsy.devguidesample.DevGuideSampleApplication;
 import com.atsy.devguidesample.R;
 import com.atsy.devguidesample.databinding.ActivityMainBinding;
 import com.atsy.devguidesample.models.Const;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.atsy.devguidesample.repositories.WeatherRepository;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import timber.log.Timber;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     /** ビューバインディング */
     private ActivityMainBinding mViewBinding;
 
+    @Inject
+    public WeatherRepository mWeatherRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // フィールドインジェクションする。
+        // このタイミングで@Injectフィールドにインジェクションされる。
+        // Hiltだとこれがなくてもインジェクションしてくれる。
+        // ((DevGuideSampleApplication)getApplicationContext()).appComponent.inject(this);
 
         // ビューバインディングの設定。
         mViewBinding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = mViewBinding.getRoot();
         setContentView(view);
-
-        final Logger logger = LoggerFactory.getLogger( MainActivity.class );
 
         // 許可されていない権限があれば、権限リクエストする。
         List<String> noPermissions = getNoPermitted();
@@ -53,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mViewBinding.btnLogging.setOnClickListener( view1 -> {
-
-            logger.debug("bbb");
+            Timber.d("ロギング！！");
         });
 
         // ListTrialActivityへの遷移。
@@ -69,9 +77,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        Log.d(Const.LOG_TAG, "onStart()");
-
     }
 
     private List<String> getNoPermitted() {
@@ -84,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         for( String p : needPermissions) {
             if (ContextCompat.checkSelfPermission(
                     getApplicationContext(), p ) != PackageManager.PERMISSION_GRANTED) {
-                Log.d("abc", MessageFormat.format("no {0}", p));
+                Timber.d(MessageFormat.format("no {0}", p));
                 noPermissions.add(p);
             }
         }
@@ -95,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Log.d(Const.LOG_TAG, "onResume()");
+        Timber.d("onResume()");
 
         // 許可されていない権限があれば、権限リクエストする。
         List<String> noPermissions = getNoPermitted();

@@ -1,15 +1,15 @@
 package com.atsy.devguidesample.views;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.atsy.devguidesample.R;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import timber.log.Timber;
 
+@AndroidEntryPoint
 public class ListTrialActivity extends AppCompatActivity {
 
     @Override

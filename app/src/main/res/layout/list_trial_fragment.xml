@@ -3,7 +3,7 @@
 
     <data>
         <variable
-            name="mViewModel"
+            name="viewModel"
             type="com.atsy.devguidesample.viewmodels.ListTrialViewModel" />
     </data>
 
@@ -31,7 +31,7 @@
             app:layout_constraintTop_toBottomOf="@id/message"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@={mViewModel.inputText}"/>
+            android:text="@={viewModel.inputText}"/>
         <Button
             android:id="@+id/btnTest"
             android:layout_width="wrap_content"

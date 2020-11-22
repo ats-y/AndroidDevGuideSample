@@ -11,7 +11,8 @@ import timber.log.Timber;
 public class DevGuideSampleApplication extends Application {
 
     // DaggerIApplicationComponentは、IApplicationComponent作成直後にビルドすると自動生成される。
-    public IApplicationComponent appComponent = DaggerIApplicationComponent.create();
+    // Hiltを使う場合は不要。
+    //public IApplicationComponent appComponent = DaggerIApplicationComponent.create();
 
     @Override
     public void onCreate() {

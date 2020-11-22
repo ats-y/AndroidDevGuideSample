@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.atsy.devguidesample.R;
 import com.atsy.devguidesample.databinding.ListTrialFragmentBinding;
 import com.atsy.devguidesample.repositories.WeatherRepository;
 import com.atsy.devguidesample.viewmodels.ListTrialViewModel;
@@ -56,11 +55,11 @@ public class ListTrialFragment extends Fragment {
         ListTrialViewModel.Factory viewModelFactory = new ListTrialViewModel.Factory(mWeatherRepository);
         mViewModel = new ViewModelProvider(this, viewModelFactory).get(ListTrialViewModel.class);
 
-        mViewBinding.setMViewModel(mViewModel);
+        mViewBinding.setViewModel(mViewModel);
 
         // TODO: Use the ViewModel
         mViewBinding.btnTest.setOnClickListener(view -> {
-            Timber.d("input = %s", mViewModel.inputText.getValue());
+            Timber.d("input = %s", mViewModel.inputText.get());
         });
     }
 

@@ -1,9 +1,6 @@
 package com.atsy.devguidesample.viewmodels;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
-import androidx.databinding.Bindable;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -19,13 +16,13 @@ import timber.log.Timber;
 public class ListTrialViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 
-    public MutableLiveData<String> inputText = new MutableLiveData<>();
+    public ObservableField<String> inputText = new ObservableField<>();
 
     @Inject
     public WeatherRepository mWeatherRepository;
 
     public ListTrialViewModel(){
-        inputText.postValue("abc");
+        inputText.set("abc");
     }
 
     @Inject

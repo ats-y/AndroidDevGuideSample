@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.atsy.devguidesample.databinding.ListTrialFragmentBinding;
+import com.atsy.devguidesample.models.Result;
 import com.atsy.devguidesample.repositories.WeatherRepository;
 import com.atsy.devguidesample.viewmodels.ListTrialViewModel;
 
@@ -51,17 +52,35 @@ public class ListTrialFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // ViewModelを引数ありで生成するためにListTrialViewModel.Factoryを利用。
-        //mViewModel = new ViewModelProvider(this).get(ListTrialViewModel.class);
+//        mViewModel = new ViewModelProvider(this).get(ListTrialViewModel.class);
         ListTrialViewModel.Factory viewModelFactory
                 = new ListTrialViewModel.Factory(mWeatherRepository);
         mViewModel = new ViewModelProvider(this, viewModelFactory).get(ListTrialViewModel.class);
-
         mViewBinding.setViewModel(mViewModel);
 
-        // TODO: Use the ViewModel
-        mViewBinding.btnTest.setOnClickListener(view -> {
-            Timber.d("input = %s", mViewModel.inputText.get());
+        // 天気情報取得状態を監視し、状況を表示する。
+        mViewModel.mRet.observe(getViewLifecycleOwner(), result -> {
+            // 取得状況を表示する。
+            String resultText;
+            if(result == null){
+                // 通信中表示。
+                resultText = "---";
+            } else {
+                if( result instanceof Result.Error ){
+                    // 失敗した場合。
+                    resultText = ((Result.Error)result).exception.getMessage();
+                } else {
+                    // 成功した場合。
+                    resultText = "Success";
+                }
+            }
+            mViewBinding.textResult.setText(resultText);
+        });
 
+        // ボタンタップイベント。
+        mViewBinding.btnTest.setOnClickListener(view -> {
+            // 天気情報を取得する。
+            Timber.d("input = %s", mViewModel.inputText.get());
             mViewModel.get();
         });
     }

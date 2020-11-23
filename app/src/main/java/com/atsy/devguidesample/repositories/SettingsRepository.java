@@ -21,6 +21,10 @@ public class SettingsRepository {
     /** 設定情報 */
     private Settings mSettings;
 
+    public Settings getSettings(){
+        return mSettings;
+    }
+
     /**
      * コンストラクタ
      */

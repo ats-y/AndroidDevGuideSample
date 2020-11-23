@@ -393,3 +393,16 @@ public class ListTrialFragment extends Fragment {
     }
 }
 ```
+
+<br>
+
+## Retrofit
+
+HTTP操作（GET/POST/PUT/DELETE）をJavaのInterfaceで呼び出せるようにしたHTTPクライアント。
+
+https://square.github.io/retrofit/
+
+HTTPクライアントは[OkHttp3](https://github.com/square/okhttp)。
+
+OkHttp3の[Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)でHTTPのログを出力することができる。
+

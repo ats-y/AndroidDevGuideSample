@@ -52,7 +52,8 @@ public class ListTrialFragment extends Fragment {
 
         // ViewModelを引数ありで生成するためにListTrialViewModel.Factoryを利用。
         //mViewModel = new ViewModelProvider(this).get(ListTrialViewModel.class);
-        ListTrialViewModel.Factory viewModelFactory = new ListTrialViewModel.Factory(mWeatherRepository);
+        ListTrialViewModel.Factory viewModelFactory
+                = new ListTrialViewModel.Factory(mWeatherRepository);
         mViewModel = new ViewModelProvider(this, viewModelFactory).get(ListTrialViewModel.class);
 
         mViewBinding.setViewModel(mViewModel);
@@ -60,6 +61,8 @@ public class ListTrialFragment extends Fragment {
         // TODO: Use the ViewModel
         mViewBinding.btnTest.setOnClickListener(view -> {
             Timber.d("input = %s", mViewModel.inputText.get());
+
+            mViewModel.get();
         });
     }
 

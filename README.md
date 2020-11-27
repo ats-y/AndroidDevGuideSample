@@ -412,3 +412,5 @@ OkHttp3の[Logging Interceptor](https://github.com/square/okhttp/tree/master/okh
 ## 非同期
 ---
 
+https://developer.android.com/guide/background/threading?hl=ja
+

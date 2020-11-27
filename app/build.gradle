@@ -31,12 +31,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    viewBinding {
-        enabled = true
-    }
-
-    dataBinding{
-        enabled = true
+    buildFeatures {
+        viewBinding true
+        dataBinding true
     }
 }
 
@@ -101,4 +98,16 @@ dependencies {
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:2.28-alpha"
     annotationProcessor "com.google.dagger:hilt-android-compiler:2.28-alpha"
+
+    // GSON
+    implementation "com.google.code.gson:gson:2.8.6"
+
+    // Retrofit
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // OkHttp3 Logging Interceptor
+    def okhttp_version = "4.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 }

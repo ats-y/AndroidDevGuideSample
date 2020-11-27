@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import timber.log.Timber;
 
+import static com.atsy.devguidesample.models.Const.LOG_TAG;
+
 /**
  * TimberのLogback-Android出力実体。
  * https://github.com/JakeWharton/timber
@@ -20,7 +22,11 @@ public class LogbackTree extends Timber.Tree {
     @Override
     protected void log(int priority, @Nullable String tag, @NotNull String message, @Nullable Throwable t) {
 
-        Logger logger = LoggerFactory.getLogger("DevGuideSampleLog");
+        String writeTag = tag;
+        if( writeTag == null || writeTag.isEmpty() ){
+            writeTag = LOG_TAG;
+        }
+        Logger logger = LoggerFactory.getLogger(writeTag);
         switch(priority){
             case Log.ASSERT:
             case Log.ERROR:
@@ -40,7 +46,6 @@ public class LogbackTree extends Timber.Tree {
                 break;
             default:
                 // 出力しない。
-                return;
         }
     }
 }

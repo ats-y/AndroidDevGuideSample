@@ -11,9 +11,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
+import com.atsy.devguidesample.R;
 import com.atsy.devguidesample.databinding.ListTrialFragmentBinding;
 import com.atsy.devguidesample.models.Result;
+import com.atsy.devguidesample.models.openweather.Weather;
 import com.atsy.devguidesample.repositories.WeatherRepository;
 import com.atsy.devguidesample.viewmodels.ListTrialViewModel;
 
@@ -83,6 +86,13 @@ public class ListTrialFragment extends Fragment {
             Timber.d("input = %s", mViewModel.inputText.get());
             mViewModel.get();
         });
-    }
 
+        mViewModel.mHourlyWeather.observe(getViewLifecycleOwner(), hourlyWeather -> {
+
+            Timber.d("weather list changed.");
+            WeatherAdapter adapter = new WeatherAdapter(ListTrialFragment.this.getContext(), R.layout.support_simple_spinner_dropdown_item);
+            adapter.addAll(hourlyWeather);
+            mViewBinding.weatherList.setAdapter(adapter);
+        });
+    }
 }

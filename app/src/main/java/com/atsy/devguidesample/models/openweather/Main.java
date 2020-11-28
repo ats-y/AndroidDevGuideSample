@@ -5,5 +5,6 @@ package com.atsy.devguidesample.models.openweather;
  * https://openweathermap.org/forecast5#JSON
  */
 public class Main {
-    String temp;
+    public double temp;
+    public long pressure;
 }

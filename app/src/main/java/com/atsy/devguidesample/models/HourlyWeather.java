@@ -1,5 +1,7 @@
 package com.atsy.devguidesample.models;
 
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 
 import java.text.MessageFormat;
@@ -21,6 +23,7 @@ public class HourlyWeather {
     public double mWind;
     public String mWeatherDetailText;
     public long mPressure;
+    public String mIcon;
 
     @NonNull
     @Override
@@ -31,5 +34,9 @@ public class HourlyWeather {
 
         return MessageFormat.format("{0} {1}",
                 formattedDate, mWeatherDetailText);
+    }
+
+    public Uri getIconUlr() {
+        return Uri.parse(String.format("https://openweathermap.org/img/wn/%s@4x.png", mIcon));
     }
 }

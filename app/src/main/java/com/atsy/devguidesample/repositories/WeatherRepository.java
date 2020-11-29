@@ -122,6 +122,7 @@ public class WeatherRepository {
                     w.mTemp = element.main.temp;
                     w.mWind = element.wind.speed;
                     w.mPressure = element.main.pressure;
+                    w.mIcon = element.weather[0].icon;
                     mWeathers.add(w);
                 }
 
@@ -130,20 +131,5 @@ public class WeatherRepository {
             }
         });
         Timber.d("通信要求完了！");
-
-//        // REST APIの非同期呼び出し。
-//        service.getForecast5("sapporo", mSettingsRepository.getSettings().getApiKey())
-//                .enqueue(new Callback<Forecast5>() {
-//                    @Override
-//                    public void onResponse(Call<Forecast5> call, Response<Forecast5> response) {
-//
-//                        mForecast = response.body();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Forecast5> call, Throwable t) {
-//
-//                    }
-//                });
     }
 }

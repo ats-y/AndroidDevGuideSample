@@ -11,14 +11,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 
 import com.atsy.devguidesample.R;
 import com.atsy.devguidesample.databinding.ListTrialFragmentBinding;
+import com.atsy.devguidesample.models.HourlyWeather;
 import com.atsy.devguidesample.models.Result;
 import com.atsy.devguidesample.models.openweather.Weather;
 import com.atsy.devguidesample.repositories.WeatherRepository;
 import com.atsy.devguidesample.viewmodels.ListTrialViewModel;
+
+import java.text.SimpleDateFormat;
 
 import javax.inject.Inject;
 
@@ -68,7 +73,11 @@ public class ListTrialFragment extends Fragment {
             if(result == null){
                 // 通信中表示。
                 resultText = "---";
+                mViewBinding.guruguru.setVisibility(View.VISIBLE);
+                mViewBinding.weatherList.setVisibility(View.GONE);
             } else {
+                mViewBinding.guruguru.setVisibility(View.GONE);
+                mViewBinding.weatherList.setVisibility(View.VISIBLE);
                 if( result instanceof Result.Error ){
                     // 失敗した場合。
                     resultText = ((Result.Error)result).exception.getMessage();

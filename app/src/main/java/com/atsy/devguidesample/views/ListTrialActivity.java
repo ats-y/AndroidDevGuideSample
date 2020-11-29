@@ -15,7 +15,7 @@ public class ListTrialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_trial_activity);
+        setContentView(R.layout.activity_list_trial);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, ListTrialFragment.newInstance())

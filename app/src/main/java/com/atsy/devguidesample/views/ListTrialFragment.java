@@ -11,19 +11,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 
 import com.atsy.devguidesample.R;
-import com.atsy.devguidesample.databinding.ListTrialFragmentBinding;
-import com.atsy.devguidesample.models.HourlyWeather;
+import com.atsy.devguidesample.databinding.FragmentListTrialBinding;
 import com.atsy.devguidesample.models.Result;
-import com.atsy.devguidesample.models.openweather.Weather;
 import com.atsy.devguidesample.repositories.WeatherRepository;
 import com.atsy.devguidesample.viewmodels.ListTrialViewModel;
-
-import java.text.SimpleDateFormat;
 
 import javax.inject.Inject;
 
@@ -34,7 +27,7 @@ import timber.log.Timber;
 public class ListTrialFragment extends Fragment {
 
     private ListTrialViewModel mViewModel;
-    private ListTrialFragmentBinding mViewBinding;
+    private FragmentListTrialBinding mViewBinding;
 
     @Inject
     public WeatherRepository mWeatherRepository;
@@ -49,7 +42,7 @@ public class ListTrialFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         Timber.v("ListTrialFragment.onCreateView()");
 
-        mViewBinding = ListTrialFragmentBinding.inflate(getLayoutInflater());
+        mViewBinding = FragmentListTrialBinding.inflate(getLayoutInflater());
         return mViewBinding.getRoot();
         //return inflater.inflate(R.layout.list_trial_fragment, container, false);
     }

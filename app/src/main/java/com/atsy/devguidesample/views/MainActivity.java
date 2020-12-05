@@ -13,14 +13,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
-import android.util.StringBuilderPrinter;
+import android.os.Handler;
 import android.view.View;
 
-import com.atsy.devguidesample.DevGuideSampleApplication;
 import com.atsy.devguidesample.R;
 import com.atsy.devguidesample.databinding.ActivityMainBinding;
-import com.atsy.devguidesample.models.Const;
+import com.atsy.devguidesample.models.RepeatedHitBlocker;
 import com.atsy.devguidesample.repositories.SettingsRepository;
 import com.atsy.devguidesample.repositories.WeatherRepository;
 
@@ -80,6 +78,24 @@ public class MainActivity extends AppCompatActivity {
             Timber.i("ListTrialActivityへの遷移");
            Intent intent = new Intent(this, ListTrialActivity.class);
            startActivity(intent);
+        });
+
+        mViewBinding.CanTabTextView.setOnClickListener(view1 -> {
+
+            Timber.d("ラベルタップ");
+
+            // 連打防止。
+            if( !RepeatedHitBlocker.Block() ){
+                return;
+            }
+
+            Handler h = new Handler();
+            h.postDelayed(() -> {
+                Intent intent = new Intent(this, ListTrialActivity.class);
+                startActivityForResult(intent, 0);
+
+            }, 300);
+//            startActivity(intent);
         });
     }
 

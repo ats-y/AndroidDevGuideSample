@@ -10,7 +10,7 @@ https://github.com/tony19/logback-android
     <!-- Create a logcat appender -->
     <appender name="LOGCAT" class="ch.qos.logback.classic.android.LogcatAppender">
         <encoder>
-            <pattern>%msg</pattern>
+            <pattern>[%thread] %msg</pattern>
         </encoder>
     </appender>
 

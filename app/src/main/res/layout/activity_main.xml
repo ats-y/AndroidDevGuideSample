@@ -45,4 +45,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="ListTrialActivityへ" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/CanTabTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_navigate_list_trial"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="タップ可能"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

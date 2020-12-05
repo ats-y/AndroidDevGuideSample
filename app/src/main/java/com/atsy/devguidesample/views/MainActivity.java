@@ -81,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
            Intent intent = new Intent(this, ListTrialActivity.class);
            startActivity(intent);
         });
+
+        // RecyclerTrialActivityへの遷移。
+        mViewBinding.btnRecycleTrial.setOnClickListener(view1 -> {
+            Intent intent = new Intent(this, RecyclerTrialActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override

@@ -5,8 +5,8 @@ package com.atsy.devguidesample.models.openweather;
  * https://openweathermap.org/forecast5#JSON
  */
 public class Weather {
-    String id;
-    String main;
-    String description;
-    String icon;
+    public String id;
+    public String main;
+    public String description;
+    public String icon;
 }

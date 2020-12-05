@@ -1,14 +1,17 @@
 package com.atsy.devguidesample.repositories;
 
+import com.atsy.devguidesample.models.HourlyWeather;
 import com.atsy.devguidesample.models.Result;
 import com.atsy.devguidesample.models.openweather.Forecast5;
-import com.atsy.devguidesample.services.OpenWeather;
 import com.atsy.devguidesample.services.OpenWeatherService;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
@@ -29,31 +32,23 @@ public class WeatherRepository {
         void onComplete(Result<T> result);
     }
 
-    private String mData;
-
-    public String GetData(){
-        return mData;
-    }
-
-    public void SetData(String value){
-        mData = value;
-    }
-
-    private final OpenWeather mOpenWeather;
-
     private final SettingsRepository mSettingsRepository;
 
     /** スレッドプール */
     private final Executor mExecutor;
 
-    private Forecast5 mForecast;
+    /** 天気リスト */
+    private List<HourlyWeather> mWeathers;
+
+    /** 天気リストを返す */
+    public List<HourlyWeather> getWeathers() {
+        return mWeathers;
+    }
 
     @Inject
     public WeatherRepository(SettingsRepository settingsRepository,
-                             OpenWeather api,
                              Executor executor){
         mSettingsRepository = settingsRepository;
-        mOpenWeather = api;
         mExecutor = executor;
     }
 
@@ -61,7 +56,7 @@ public class WeatherRepository {
      * 天気情報を取得する。
      * @param callback 取得結果のコールバック
      */
-    public void get(Callback callback){
+    public void get(String city, Callback callback){
 
         // HTTPログ出力をTimber経由にする。
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(
@@ -99,7 +94,7 @@ public class WeatherRepository {
                 // REST APIの同期呼び出し。
                 Response<Forecast5> result;
                 try {
-                    result = service.getForecast5("sapporo",
+                    result = service.getForecast5(city,
                             mSettingsRepository.getSettings().getApiKey()).execute();
                 } catch (IOException e) {
                     // 通信失敗。
@@ -116,25 +111,25 @@ public class WeatherRepository {
                     return;
                 }
 
+                // APIから取得したデータを天気リストに格納する。
+                mWeathers = new ArrayList<>();
+                for( com.atsy.devguidesample.models.openweather.List element : result.body().list ){
+
+                    HourlyWeather w = new HourlyWeather();
+                    w.mDateTime = new Date(element.dt * 1000L);
+                    w.mWeatherText = element.weather[0].main;
+                    w.mWeatherDetailText = element.weather[0].description;
+                    w.mTemp = element.main.temp;
+                    w.mWind = element.wind.speed;
+                    w.mPressure = element.main.pressure;
+                    w.mIcon = element.weather[0].icon;
+                    mWeathers.add(w);
+                }
+
                 // REST API呼び出し成功。
                 callback.onComplete(new Result.Success(null) );
             }
         });
         Timber.d("通信要求完了！");
-
-//        // REST APIの非同期呼び出し。
-//        service.getForecast5("sapporo", mSettingsRepository.getSettings().getApiKey())
-//                .enqueue(new Callback<Forecast5>() {
-//                    @Override
-//                    public void onResponse(Call<Forecast5> call, Response<Forecast5> response) {
-//
-//                        mForecast = response.body();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Forecast5> call, Throwable t) {
-//
-//                    }
-//                });
     }
 }

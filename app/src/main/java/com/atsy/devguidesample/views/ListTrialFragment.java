@@ -12,7 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.atsy.devguidesample.databinding.ListTrialFragmentBinding;
+import com.atsy.devguidesample.R;
+import com.atsy.devguidesample.databinding.FragmentListTrialBinding;
 import com.atsy.devguidesample.models.Result;
 import com.atsy.devguidesample.repositories.WeatherRepository;
 import com.atsy.devguidesample.viewmodels.ListTrialViewModel;
@@ -26,7 +27,7 @@ import timber.log.Timber;
 public class ListTrialFragment extends Fragment {
 
     private ListTrialViewModel mViewModel;
-    private ListTrialFragmentBinding mViewBinding;
+    private FragmentListTrialBinding mViewBinding;
 
     @Inject
     public WeatherRepository mWeatherRepository;
@@ -41,7 +42,7 @@ public class ListTrialFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         Timber.v("ListTrialFragment.onCreateView()");
 
-        mViewBinding = ListTrialFragmentBinding.inflate(getLayoutInflater());
+        mViewBinding = FragmentListTrialBinding.inflate(getLayoutInflater());
         return mViewBinding.getRoot();
         //return inflater.inflate(R.layout.list_trial_fragment, container, false);
     }
@@ -65,7 +66,11 @@ public class ListTrialFragment extends Fragment {
             if(result == null){
                 // 通信中表示。
                 resultText = "---";
+                mViewBinding.guruguru.setVisibility(View.VISIBLE);
+                mViewBinding.weatherList.setVisibility(View.GONE);
             } else {
+                mViewBinding.guruguru.setVisibility(View.GONE);
+                mViewBinding.weatherList.setVisibility(View.VISIBLE);
                 if( result instanceof Result.Error ){
                     // 失敗した場合。
                     resultText = ((Result.Error)result).exception.getMessage();
@@ -83,6 +88,13 @@ public class ListTrialFragment extends Fragment {
             Timber.d("input = %s", mViewModel.inputText.get());
             mViewModel.get();
         });
-    }
 
+        mViewModel.mHourlyWeather.observe(getViewLifecycleOwner(), hourlyWeather -> {
+
+            Timber.d("weather list changed.");
+            WeatherAdapter adapter = new WeatherAdapter(ListTrialFragment.this.getContext(), R.layout.support_simple_spinner_dropdown_item);
+            adapter.addAll(hourlyWeather);
+            mViewBinding.weatherList.setAdapter(adapter);
+        });
+    }
 }

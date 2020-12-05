@@ -5,8 +5,11 @@ package com.atsy.devguidesample.models.openweather;
  * https://openweathermap.org/forecast5#JSON
  */
 public class List {
-    String dt;
-    Main main;
-    Weather[] weather;
-    String dt_txt;
+    public long dt;
+    public Main main;
+    public Weather[] weather;
+    public String dt_txt;
+    public long pressure;
+    public Wind wind;
+
 }

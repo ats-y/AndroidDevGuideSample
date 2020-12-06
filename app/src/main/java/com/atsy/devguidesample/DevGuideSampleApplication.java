@@ -18,6 +18,10 @@ public class DevGuideSampleApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // Logbackの設定ファイルの変数に値が代入される様にする。
+        // 設定ファイルでは${TERMINAL}に↓で指定した値が入る。
+        System.setProperty("TERMINAL", "te1");
+
         // ログ出力の初期設定。
         // 出力処理の実体をLogbackにする。
         Timber.plant(new LogbackTree());

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+logback-android ログ出力設定
+https://github.com/tony19/logback-android
+-->
+<configuration debug='true'>
+
+    <property name="LOG_DIR" value="${EXT_DIR}/DevGuideSample" />
+
+    <!-- Create a logcat appender -->
+    <appender name="LOGCAT" class="ch.qos.logback.classic.android.LogcatAppender">
+        <encoder>
+            <pattern>[%thread] %msg</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- active log file -->
+        <!-- ${TERMINAL} はプログラムのSystem.setProperty("TERMINAL", "この値");で指定。「この値」が代入される -->
+        <file>${LOG_DIR}/log_${TERMINAL}.txt</file>
+        <encoder>
+            <pattern>%date{ISO8601} %level %logger{35} [%thread] %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover period -->
+            <fileNamePattern>${LOG_DIR}/log_${TERMINAL}.%d.txt</fileNamePattern>
+
+            <!-- keep 7 days' worth of history -->
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="TRACE">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="LOGCAT" />
+    </root>
+
+</configuration>

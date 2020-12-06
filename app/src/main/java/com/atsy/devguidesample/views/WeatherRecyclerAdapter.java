@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atsy.devguidesample.databinding.CardWeatherBinding;
-import com.atsy.devguidesample.databinding.ViewWeatherBinding;
 import com.atsy.devguidesample.models.HourlyWeather;
 
 import java.text.SimpleDateFormat;

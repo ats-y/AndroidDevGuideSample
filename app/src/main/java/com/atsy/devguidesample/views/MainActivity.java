@@ -82,20 +82,24 @@ public class MainActivity extends AppCompatActivity {
 
         mViewBinding.CanTabTextView.setOnClickListener(view1 -> {
 
-            Timber.d("ラベルタップ");
+                    Timber.d("ラベルタップ");
 
-            // 連打防止。
-            if( !RepeatedHitBlocker.Block() ){
-                return;
-            }
+                    // 連打防止。
+                    if (!RepeatedHitBlocker.Block()) {
+                        return;
+                    }
 
-            Handler h = new Handler();
-            h.postDelayed(() -> {
-                Intent intent = new Intent(this, ListTrialActivity.class);
-                startActivityForResult(intent, 0);
-
-            }, 300);
-//            startActivity(intent);
+                    Handler h = new Handler();
+                    h.postDelayed(() -> {
+                        Intent intent = new Intent(this, ListTrialActivity.class);
+                        startActivityForResult(intent, 0);
+                    }, 300);
+                });
+            
+        // RecyclerTrialActivityへの遷移。
+        mViewBinding.btnRecycleTrial.setOnClickListener(view1 -> {
+            Intent intent = new Intent(this, RecyclerTrialActivity.class);
+            startActivity(intent);
         });
     }
 

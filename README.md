@@ -5,7 +5,6 @@ Android Developersガイド(https://developer.android.com/guide?hl=ja)に載っ�
 <br>
 
 ## ログ出力
----
 Timberとlogback-androidを使用。
 
 * Timber
@@ -28,14 +27,14 @@ logback-androidの出力設定は`app/src/main/assets/logback.xml`で定義す�
 <br>
 
 ## DI 依存性注入
----
+
 
 以下の関連となっているデータクラスをMainActivityにインジェクションする。
 
     WeatherRepository -> OpenWeather
 
 ### Daggerのみ
----
+
 build.gradle(app)
 
 ```gradle
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 <br>
 
 ### Hiltの場合
----
+
 
 build.gradle(module)
 ```gradle
@@ -184,7 +183,6 @@ IApplicationComponent.javaは不要。
 <br>
 
 ## MVVM
----
 
 |種類|Androidソース|
 |---|---|
@@ -195,7 +193,8 @@ IApplicationComponent.javaは不要。
 <br>
 
 ### ViewModel
----
+
+
 MVVMとしては、画面描画(View)と画面の業務ロジック(ViewModel)を分離し、業務ロジック・データを抽出できるという特徴がある。
 
 Androidの場合、画面回転などでActivityクラスのインスタンスが再生成されてEditTextの入力内容が空になるが、ViewModelで業務データを保持して表示内容をViewとバインディングさせることでActivityインスタンスが再生成されても表示を維持できるという利点がある。
@@ -206,7 +205,7 @@ https://developer.android.com/topic/libraries/architecture/viewmodel?hl=ja
 Viewを「ListTrialFragment」、これに対応するViewModelを「ListTrialViewModel」として作成する。
 
 #### ViewModelクラスを作成する
----
+
 androidx.lifecycle.ViewModelのViewModelを継承してViewModelクラスを作成する。
 
 ListTrialViewModel.java
@@ -216,7 +215,7 @@ public class ListTrialViewModel extends ViewModel {
 ```
 
 #### ViewでViewModelを生成する
----
+
 ListTrialFragment.java
 ```java
 public class ListTrialFragment extends Fragment {
@@ -235,7 +234,7 @@ public class ListTrialFragment extends Fragment {
 ```
 
 #### レイアウトXMLとViewModelをビューバインディングでバインディングする
----
+
 build.gradle(app)
 ```gradle
 android {
@@ -301,7 +300,7 @@ public class ListTrialFragment extends Fragment {
 <br>
 
 #### レイアウトXMLの表示プロパティとViewModelのメンバ変数をバインディングする
----
+
 
 https://developer.android.com/topic/libraries/data-binding?hl=ja
 
@@ -349,7 +348,7 @@ public class ListTrialViewModel extends ViewModel {
 <br>
 
 ### ViewModelを引数付きで生成する
----
+
 
 [ViewでViewModelを生成する](#ViewでViewModelを生成する)でのViewModel生成では初回のインスタンス生成時、ViewModelの引数なしコンストラクタが呼ばれる。
 
@@ -397,7 +396,6 @@ public class ListTrialFragment extends Fragment {
 <br>
 
 ## Retrofit
----
 
 HTTP操作（GET/POST/PUT/DELETE）をJavaのInterfaceで呼び出せるようにしたHTTPクライアント。
 
@@ -410,7 +408,23 @@ OkHttp3の[Logging Interceptor](https://github.com/square/okhttp/tree/master/okh
 <br>
 
 ## 非同期
----
 
 https://developer.android.com/guide/background/threading?hl=ja
 
+<br>
+
+## RecyclerView
+
+https://developer.android.com/guide/topics/ui/layout/recyclerview
+
+ListViewの改良版。
+
+表示対象の集合とその要素の表示制御をアダプタで行う点はListViewと同じ。ListViewとの違いは以下の通り。
+
+* アダプタのベースクラスがRecyclerView.Adapter。
+
+* 要素の表示制御がonCreateViewHolder()とonBindViewHolder()にわかれた。
+onCreateViewHolder()で要素を表示するViewの生成、onBindViewHolder()がViewへのデータ表示制御を行う。
+
+* 各要素の表示ViewはViewHolderで明示的に指定できる様になった。
+ListViewのArrayAdapterの型引数はデータの型だったが、RecyclerView.ViewHolderもしくは派生したViewHolder。これによって、ビューバインディングを保持しやすくなった。

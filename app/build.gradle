@@ -111,6 +111,9 @@ dependencies {
     def okhttp_version = "4.9.0"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
+    // Apache Commons Lang
+    implementation "org.apache.commons:commons-lang3:3.11"
+
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation "androidx.cardview:cardview:1.0.0"

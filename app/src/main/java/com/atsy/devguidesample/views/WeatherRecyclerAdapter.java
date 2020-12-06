@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atsy.devguidesample.databinding.CardWeatherBinding;
 import com.atsy.devguidesample.databinding.ViewWeatherBinding;
 import com.atsy.devguidesample.models.HourlyWeather;
 
@@ -34,7 +35,7 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<WeatherRecycler
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // 要素を表示するViewをビューバインディングから生成する。
-        ViewWeatherBinding viewBinding = ViewWeatherBinding.inflate(LayoutInflater.from(parent.getContext()));
+        CardWeatherBinding viewBinding = CardWeatherBinding.inflate(LayoutInflater.from(parent.getContext()));
         return new MyViewHolder(viewBinding);
     }
 
@@ -63,13 +64,13 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<WeatherRecycler
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         /** Viewのビューバインディングを保持する */
-        private final ViewWeatherBinding mViewBinding;
+        private final CardWeatherBinding mViewBinding;
 
         /**
          * コンストラクタ
          * @param viewBinding ビューバインディング。
          */
-        public MyViewHolder(@NonNull ViewWeatherBinding viewBinding) {
+        public MyViewHolder(@NonNull CardWeatherBinding viewBinding) {
             super(viewBinding.getRoot());
             mViewBinding = viewBinding;
         }

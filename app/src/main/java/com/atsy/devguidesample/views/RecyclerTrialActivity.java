@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.atsy.devguidesample.databinding.ActivityRecyclerTrialBinding;
@@ -54,8 +55,10 @@ public class RecyclerTrialActivity extends AppCompatActivity {
 
         // RecyclerViewの設定。
         mViewBinding.weatherList.setHasFixedSize(true);
+//        mViewBinding.weatherList.setLayoutManager(
+//                new LinearLayoutManager(this));
         mViewBinding.weatherList.setLayoutManager(
-                new LinearLayoutManager(this));
+                new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false ));
 
         // ViewModelの天気リストを監視する。
         vm.mWeatherList.observe(this, weathers -> {
